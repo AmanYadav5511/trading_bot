@@ -2,19 +2,20 @@
 
 A simplified Python CLI application to place market orders and limit orders on BINANCE FUTURES TESTNET (USDT-M), built with a clean, modular structure and proper logging/error handling.
 
-## Project Structure
-
+cat > /tmp/structure.txt << 'EOF'
 trading_bot/
 ├── bot/
-│   ├── init.py
-│   ├── client.py              # Binance client wrapper (API layer)
-│   ├── orders.py              # Order placement logic
-│   ├── validators.py          # Input validation
-│   └── logging_config.py      # Logging setup
-├── cli.py                     # CLI entry point
+│   ├── __init__.py
+│   ├── client.py           # Binance client wrapper (API layer)
+│   ├── orders.py            # Order placement logic
+│   ├── validators.py        # Input validation
+│   └── logging_config.py    # Logging setup
+├── cli.py                   # CLI entry point
 ├── requirements.txt
-├── .env                       # API credentials not committed
+├── .env                      # API credentials (not committed)
 └── README.md
+EOF
+cat /tmp/structure.txt
 
 
 ## Setup
