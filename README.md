@@ -68,9 +68,10 @@ python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.01 --price 
 |---|---|---|
 | `--symbol` | Yes | Trading pair, e.g., `BTCUSDT` |
 | `--side` | Yes | `BUY` or `SELL` |
-| `--type` | Yes | `MARKET` or `LIMIT` |
+| `--type` | Yes | `MARKET`, `LIMIT`, or `STOP` |
 | `--quantity` | Yes | Order quantity (positive number) |
-| `--price` | Only for LIMIT | Order price (positive number) |
+| `--price` | For LIMIT/STOP | Order price (positive number) |
+| `--stop-price` | Only for STOP | Stop trigger price (positive number) |
 
 ## Logging
 
@@ -97,3 +98,10 @@ All API requests, responses, and errors are logged to `trading_bot.log` in the p
 
 
 
+### Place a STOP-LIMIT order (Bonus)
+
+```bash
+python cli.py --symbol BTCUSDT --side SELL --type STOP --quantity 0.01 --price 58000 --stop-price 58500
+```
+
+This places a conditional order: once the market price hits the stop/trigger price, a limit order is placed at the specified price.

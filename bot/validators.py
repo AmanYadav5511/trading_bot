@@ -3,7 +3,7 @@ from bot.logging_config import setup_logger
 logger = setup_logger()
 
 VALID_SIDES = {"BUY", "SELL"}
-VALID_ORDER_TYPES = {"MARKET", "LIMIT"}
+VALID_ORDER_TYPES = {"MARKET", "LIMIT", "STOP"}
 
 
 def validate_symbol(symbol: str) -> str:
@@ -59,9 +59,9 @@ def validate_quantity(quantity) -> float:
 
 def validate_price(price, order_type: str):
     """
-    Price is required only for LIMIT orders.
+    Price is required for LIMIT and STOP orders.
     """
-    if order_type == "LIMIT":
+    if order_type in ("LIMIT", "STOP"):
         if price is None:
             logger.error("Price is required for LIMIT orders but was not provided")
             raise ValueError("Price is required for LIMIT orders")
@@ -78,3 +78,25 @@ def validate_price(price, order_type: str):
         return price
 
     return None  # MARKET orders don't need a price
+
+def validate_stop_price(stop_price, order_type: str):
+    """
+    Stop price is required only for STOP orders.
+    """
+    if order_type == "STOP":
+        if stop_price is None:
+            logger.error("Stop price is required for STOP orders but was not provided")
+            raise ValueError("Stop price is required for STOP orders")
+        try:
+            stop_price = float(stop_price)
+        except (TypeError, ValueError):
+            logger.error(f"Stop price is not a valid number: {stop_price}")
+            raise ValueError(f"Stop price must be a number. Got: {stop_price}")
+
+        if stop_price <= 0:
+            logger.error(f"Stop price must be positive: {stop_price}")
+            raise ValueError(f"Stop price must be greater than 0. Got: {stop_price}")
+
+        return stop_price
+
+    return None

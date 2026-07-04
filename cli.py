@@ -20,15 +20,19 @@ def parse_args():
     )
     parser.add_argument(
         "--type", required=True, dest="order_type",
-        choices=["MARKET", "LIMIT", "market", "limit"],
-        help="Order type: MARKET or LIMIT"
+        choices=["MARKET", "LIMIT", "STOP", "market", "limit", "stop"],
+        help="Order type: MARKET, LIMIT, or STOP"
     )
     parser.add_argument(
         "--quantity", required=True, type=float, help="Order quantity"
     )
     parser.add_argument(
         "--price", required=False, type=float, default=None,
-        help="Order price (required only for LIMIT orders)"
+        help="Order price (required for LIMIT and STOP orders)"
+    )
+    parser.add_argument(
+        "--stop-price", required=False, type=float, default=None, dest="stop_price",
+        help="Stop trigger price (required only for STOP orders)"
     )
 
     return parser.parse_args()
@@ -46,6 +50,7 @@ def main():
             order_type=args.order_type,
             quantity=args.quantity,
             price=args.price,
+            stop_price=args.stop_price,
         )
     except Exception as e:
         logger.error(f"CLI execution failed: {e}")

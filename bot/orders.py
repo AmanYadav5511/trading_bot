@@ -5,13 +5,14 @@ from bot.validators import (
     validate_order_type,
     validate_quantity,
     validate_price,
+    validate_stop_price,
 )
 from bot.logging_config import setup_logger
 
 logger = setup_logger()
 
 
-def place_trade(symbol: str, side: str, order_type: str, quantity, price=None):
+def place_trade(symbol: str, side: str, order_type: str, quantity, price=None, stop_price=None):
     """
     Validates input, then places an order via BinanceFuturesClient.
     Returns a dict with the order summary and response, or raises an exception on failure.
@@ -21,13 +22,15 @@ def place_trade(symbol: str, side: str, order_type: str, quantity, price=None):
     order_type = validate_order_type(order_type)
     quantity = validate_quantity(quantity)
     price = validate_price(price, order_type)
+    stop_price = validate_stop_price(stop_price, order_type)
 
     order_summary = {
         "symbol": symbol,
         "side": side,
         "type": order_type,
         "quantity": quantity,
-        "price": price if order_type == "LIMIT" else "N/A (MARKET)",
+        "price": price if order_type in ("LIMIT", "STOP") else "N/A (MARKET)",
+        "stop_price": stop_price if order_type == "STOP" else "N/A",
     }
 
     print("\n--- Order Request Summary ---")
@@ -45,15 +48,18 @@ def place_trade(symbol: str, side: str, order_type: str, quantity, price=None):
             order_type=order_type,
             quantity=quantity,
             price=price,
+            stop_price=stop_price,
         )
-
         print("\n--- Order Response ---")
-        print(f"Order ID     : {response.get('orderId')}")
-        print(f"Status       : {response.get('status')}")
-        print(f"Executed Qty : {response.get('executedQty')}")
+        order_id = response.get('orderId') or response.get('algoId')
+        status = response.get('status') or response.get('algoStatus')
+        print(f"Order ID     : {order_id}")
+        print(f"Status       : {status}")
+        print(f"Executed Qty : {response.get('executedQty', 'N/A')}")
         print(f"Avg Price    : {response.get('avgPrice', 'N/A')}")
+        if order_type == "STOP":
+            print(f"Trigger Price: {response.get('triggerPrice', 'N/A')}")
         print("\n✅ Order placed successfully.\n")
-
         return response
 
     except Exception as e:

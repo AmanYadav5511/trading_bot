@@ -30,7 +30,7 @@ class BinanceFuturesClient:
             logger.error(f"Failed to initialize Binance client: {e}")
             raise
 
-    def place_order(self, symbol: str, side: str, order_type: str, quantity: float, price: float = None):
+    def place_order(self, symbol: str, side: str, order_type: str, quantity: float, price: float = None, stop_price: float = None):
         """
         Places an order on Binance Futures Testnet.
         Returns the raw API response as a dict.
@@ -44,6 +44,11 @@ class BinanceFuturesClient:
 
         if order_type == "LIMIT":
             order_params["price"] = price
+            order_params["timeInForce"] = "GTC"  # Good 'Til Cancelled
+
+        elif order_type == "STOP":
+            order_params["price"] = price
+            order_params["stopPrice"] = stop_price
             order_params["timeInForce"] = "GTC"
 
         logger.info(f"Sending order request: {order_params}")
