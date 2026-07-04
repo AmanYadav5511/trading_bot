@@ -35,8 +35,6 @@
 2026-07-04 06:58:03 - INFO - Binance Futures Testnet client initialized successfully
 2026-07-04 06:58:03 - INFO - Sending order request: {'symbol': 'BTCUSDT', 'side': 'BUY', 'type': 'MARKET', 'quantity': 0.01}
 2026-07-04 06:58:04 - INFO - Order response received: {'orderId': 18841845697, 'symbol': 'BTCUSDT', 'status': 'NEW', 'clientOrderId': 'x-Cb7ytekJ406561bd18effc7eef4a09', 'price': '0.00', 'origQty': '0.0100', 'executedQty': '0.0000', 'cumQty': '0.0000', 'timeInForce': 'GTC', 'type': 'MARKET', 'reduceOnly': False, 'closePosition': False, 'side': 'BUY', 'positionSide': 'BOTH', 'stopPrice': '0.00', 'workingType': 'CONTRACT_PRICE', 'priceProtect': False, 'origType': 'MARKET', 'priceMatch': 'NONE', 'selfTradePreventionMode': 'EXPIRE_MAKER', 'goodTillDate': 0, 'updateTime': 1783128484102}
-2026-07-04 06:58:05 - ERROR - Order placement failed: 'BinanceFuturesClient' object has no attribute 'get_order_status'
-2026-07-04 06:58:05 - ERROR - CLI execution failed: 'BinanceFuturesClient' object has no attribute 'get_order_status'
 2026-07-04 08:47:11 - INFO - CLI invoked with args: {'symbol': 'BTCUSDT', 'side': 'BUY', 'order_type': 'MARKET', 'quantity': 0.01, 'price': None, 'stop_price': None}
 2026-07-04 08:47:11 - INFO - Validated order request: {'Symbol': 'BTCUSDT', 'Side': 'BUY', 'Type': 'MARKET', 'Quantity': 0.01, 'Price': 'N/A (MARKET)', 'Stop Price': 'N/A'}
 2026-07-04 08:47:11 - INFO - Binance Futures Testnet client initialized successfully
