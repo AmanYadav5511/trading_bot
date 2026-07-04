@@ -3,68 +3,58 @@
 A simplified Python CLI application to place Market, Limit, and Stop-Limit orders on Binance Futures Testnet (USDT-M), built with a clean, modular structure and proper logging/error handling.
 
 ## Project Structure
-trading_bot/
-├── bot/
-│   ├── init.py
-│   ├── client.py            # Binance client wrapper (API layer)
-│   ├── orders.py             # Order placement logic
-│   ├── validators.py         # Input validation
-│   └── logging_config.py     # Logging setup
-├── cli.py                    # CLI entry point
-├── requirements.txt
-├── .env                       # API credentials (not committed)
-└── README.md
+
+    trading_bot/
+    +-- bot/
+    |   +-- __init__.py
+    |   +-- client.py            # Binance client wrapper (API layer)
+    |   +-- orders.py             # Order placement logic
+    |   +-- validators.py         # Input validation
+    |   +-- logging_config.py     # Logging setup
+    +-- cli.py                    # CLI entry point
+    +-- requirements.txt
+    +-- .env                       # API credentials (not committed)
+    +-- README.md
 
 ## Setup
 
 ### 1. Clone the repository
 
-```bash
-git clone https://github.com/AmanYadav5511/trading_bot.git
-cd trading_bot
-```
+    git clone https://github.com/AmanYadav5511/trading_bot.git
+    cd trading_bot
 
 ### 2. Create and activate a virtual environment
 
-```bash
-python -m venv venv
-source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate         # Windows
-```
+    python -m venv venv
+    source venv/bin/activate      # macOS/Linux
+    venv\\Scripts\\activate         # Windows
 
 ### 3. Install dependencies
 
-```bash
-pip install -r requirements.txt
-```
+    pip install -r requirements.txt
 
 ### 4. Set up Binance Futures Testnet API credentials
 
-1. Register at Binance Futures Testnet (https://testnet.binancefuture.com)
+1. Register at Binance Futures Testnet: https://testnet.binancefuture.com
 2. Generate an API Key and Secret from the testnet dashboard
-3. Create a `.env` file in the project root:
-BINANCE_API_KEY=your_api_key_here
-BINANCE_API_SECRET=your_api_secret_here
+3. Create a .env file in the project root:
+
+    BINANCE_API_KEY=your_api_key_here
+    BINANCE_API_SECRET=your_api_secret_here
 
 ## How to Run
 
 ### Place a MARKET order
 
-```bash
-python cli.py --symbol BTCUSDT --side BUY --type MARKET --quantity 0.01
-```
+    python cli.py --symbol BTCUSDT --side BUY --type MARKET --quantity 0.01
 
 ### Place a LIMIT order
 
-```bash
-python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.01 --price 60000
-```
+    python cli.py --symbol BTCUSDT --side SELL --type LIMIT --quantity 0.01 --price 60000
 
 ### Place a STOP-LIMIT order (Bonus)
 
-```bash
-python cli.py --symbol BTCUSDT --side SELL --type STOP --quantity 0.01 --price 58000 --stop-price 58500
-```
+    python cli.py --symbol BTCUSDT --side SELL --type STOP --quantity 0.01 --price 58000 --stop-price 58500
 
 This places a conditional order: once the market price hits the stop/trigger price, a limit order is placed at the specified price.
 
@@ -72,12 +62,12 @@ This places a conditional order: once the market price hits the stop/trigger pri
 
 | Argument | Required | Description |
 |---|---|---|
-| `--symbol` | Yes | Trading pair, e.g., BTCUSDT |
-| `--side` | Yes | BUY or SELL |
-| `--type` | Yes | MARKET, LIMIT, or STOP |
-| `--quantity` | Yes | Order quantity (positive number) |
-| `--price` | For LIMIT/STOP | Order price (positive number) |
-| `--stop-price` | Only for STOP | Stop trigger price (positive number) |
+| --symbol | Yes | Trading pair, e.g., BTCUSDT |
+| --side | Yes | BUY or SELL |
+| --type | Yes | MARKET, LIMIT, or STOP |
+| --quantity | Yes | Order quantity (positive number) |
+| --price | For LIMIT/STOP | Order price (positive number) |
+| --stop-price | Only for STOP | Stop trigger price (positive number) |
 
 ## Logging
 
