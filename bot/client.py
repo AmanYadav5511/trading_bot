@@ -35,6 +35,7 @@ class BinanceFuturesClient:
         Places an order on Binance Futures Testnet.
         Returns the raw API response as a dict.
         """
+
         order_params = {
             "symbol": symbol,
             "side": side,
@@ -66,3 +67,16 @@ class BinanceFuturesClient:
         except Exception as e:
             logger.error(f"Unexpected error while placing order: {e}")
             raise
+
+    def get_order_status(self, symbol: str, order_id):
+        """
+        Fetches the latest status of a previously placed order.
+        Used to get updated executedQty and avgPrice after a brief delay.
+        """
+        try:
+            response = self.client.futures_get_order(symbol=symbol, orderId=order_id)
+            logger.info(f"Order status fetched: {response}")
+            return response
+        except Exception as e:
+            logger.error(f"Failed to fetch order status: {e}")
+            return None
